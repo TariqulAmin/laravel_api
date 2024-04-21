@@ -13,7 +13,6 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\OAuth;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
-use App\Jobs\SendEmail;
 
 class AuthController extends Controller
 {
@@ -114,12 +113,8 @@ class AuthController extends Controller
         $data["user"] = $user;
         $data["token"] = $token;
 
-        // return $this->sendEmail($request->email, $request->name, $this->provider);
-        // Mail::to($user->email)->send(new RegistrationMail($user->email, $user->name, $this->client_id, $this->client_secret, $this->token, $this->provider));
+        $this->sendEmail($request->email, $request->name, $this->provider);
 
-
-
-        SendEmail::dispatch($request->email, $request->name, $this->client_id, $this->client_secret, $this->token, json_encode($this->provider))->onQueue('emails');
 
         return $this->success($this->provider, 'User registered successfully.');
     }
