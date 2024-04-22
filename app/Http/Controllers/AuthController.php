@@ -116,7 +116,7 @@ class AuthController extends Controller
         $this->sendEmail($request->email, $request->name, $this->provider);
 
 
-        return $this->success($this->provider, 'User registered successfully.');
+        return $this->success($data, 'User registered successfully.');
     }
 
     public function logout(Request $request)
